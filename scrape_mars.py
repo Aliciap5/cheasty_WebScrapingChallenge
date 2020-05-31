@@ -23,15 +23,17 @@ def scrape():
         news_desc = soup.find_all(class_="article_teaser_body")[0].text
     except:
         news_desc = []
-            
-
+    
     # Visit the url for JPL Featured Space Image here.
     url2 ='https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
-    response2 = requests.get(url2)
-    soup2 = bs4(response2.text, 'html.parser')
+    driver.get(url2)
+    soup2 = bs4(driver.page_source, 'html.parser')  
 
-    featured_image_url = soup2.find('a',class_="button fancybox")['data-fancybox-href']
-    image_url = print(f"{url2}{featured_image_url}")
+    featured_image_url = soup2.find('article', class_="carousel_item")['style']
+    featured_image_url = featured_image_url.replace("background-image: url('","").replace("');","")
+
+    image_url = f'https://www.jpl.nasa.gov{featured_image_url}'
+
     
     # Visit the Mars Weather twitter account here and scrape the latest Mars weather tweet from the page. Save the tweet text for the weather report as a variable called mars_weather.
     url3 ='https://twitter.com/marswxreport?lang=en'
@@ -44,31 +46,34 @@ def scrape():
     url4 ='https://space-facts.com/mars/'
     data = pd.read_html(url4)
     df= data[0]
-    html = print(df.to_html())
+    df.columns=['Measurment','Data']
+    html = df.to_html()
+    
 
 
 
     url5 ='https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
     response5 = requests.get(url5)
     soup5 = bs4(response5.text, 'html.parser')
-    
+
     hemispheres = soup5.find_all(class_="item")
-    title = []
-    url = []
+    titles = []
+    urls = []
     for hemi in hemispheres:
         name = hemi.find('h3').text
-        src = hemi.find('a')
-        src= f"{url5}{src['href']}"
-        title.append(name)
-        url.append(src)
-    hemi_dict= {'title': title, 'url': src}
+        src = hemi.find('img')['src']        
+        src= f"https://astrogeology.usgs.gov{src}"
+        titles.append(name)
+        urls.append(src)
+
             
     mars_data = {"news_title": news_title
         , "news_desc": news_desc
         , "image_url": image_url
         , "mars_weather": mars_weather
         , "html":html
-        , "hemi_dict":hemi_dict}
+        , "titles": titles
+        , "urls": urls}
 
     driver.quit()
     return mars_data
