@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Mars</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="jumbotron text-center">
+      <h1>Mars- The Red Planet</h1>      
+      <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Get Data</a></p>
+    </div>        
+    <img src={{mars.image_url}}  class="img-fluid" alt="Responsive image" max-width: 100%>    
+    <p>{{mars.image_url}}</p>
+    <span class=border>
+      <div class="card-columns">      
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Todays weather on Mars is:</h5>
+              <p class="card-text">{{ mars.mars_weather }}</p>
+            </div>
+          </div>        
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3">
+            <div class="card-body">
+              <h5 class="card-title">In the News:</h5>
+              <h5 class="card-title">{{mars.news_title}}</h5>
+              <p class="card-text">{{ mars.news_desc }}</p>
+            </div>
+          </div>        
+        </div>
+        <div class=col-md-3>
+          <div class="card p-3">
+            <img class="card-img-top" src={{mars.urls[0]}} alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{mars.titles[0]}}</h5>          
+            </div>
+          </div>
+        </div>
+        <div class=col-md-3>
+          <div class="card p-3">
+            <img class="card-img-top" src={{mars.urls[1]}} alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{mars.titles[1]}}</h5>          
+            </div>
+          </div>
+        </div>  
+        <div class=col-md-3>
+          <div class="card p-3">
+            <img class="card-img-top" src={{mars.urls[2]}} alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{mars.titles[2]}}</h5>          
+            </div>
+          </div>
+        </div>  
+        <div class=col-md-3>
+          <div class="card p-3">
+            <img class="card-img-top" src={{mars.urls[3]}} alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{mars.titles[3]}}</h5>          
+            </div>
+          </div>
+        </div>  
+        <div class="card p-3">
+          <div class="card-body">
+          {% autoescape off %}
+            {{mars.html}}
+          {% endautoescape %}     
+          </div>
+        </div>    
+      </div>
+    </span>
+    </div>  
+</body>
+
+</html>
