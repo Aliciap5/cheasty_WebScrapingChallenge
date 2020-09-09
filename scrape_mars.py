@@ -40,7 +40,7 @@ def scrape():
     response3 = requests.get(url3)
     soup3 = bs4(response3.text, 'html.parser')
 
-    mars_weather = soup3.find(class_="tweet-text").text
+    mars_weather = soup3.find(class_="tweet").text
 
     # Visit the Mars Facts webpage here and use Pandas to scrape the table containing facts about the planet including Diameter, Mass, etc.
     url4 ='https://space-facts.com/mars/'
